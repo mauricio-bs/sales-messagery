@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -7,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum role {
+enum Role {
   seller
   administration
   manager
@@ -20,7 +21,7 @@ model User {
   name        String
   email       String            @unique
   password    String
-  role        role              @default(seller)
+  role        Role              @default(seller)
   isActive    Boolean           @default(false)
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt

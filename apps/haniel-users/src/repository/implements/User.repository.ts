@@ -1,36 +1,44 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from 'generated/prisma';
 
 import { PrismaService } from '@common/database/prisma/prisma.service';
+import { Role } from '@common/enum/role.enum';
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { User } from '@entities/User';
 import { CreateUserDTO } from '@modules/user/domain/dto/create-user.dto';
 import { FilterUsersDTO } from '@modules/user/domain/dto/filter-users.dto';
 import { UpdateUserDTo } from '@modules/user/domain/dto/update-user.dto';
 import { IUserRepository } from '@repository/IUser.repository';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateUserDTO): Promise<User> {
-    return await this.prisma.user.create({ data });
+    const user = await this.prisma.user.create({ data });
+    return {
+      ...user,
+      role: Role[user.role],
+    };
   }
 
   async update(id: string, data: UpdateUserDTo): Promise<User> {
-    return await this.prisma.user.update({ where: { id }, data });
+    const user = await this.prisma.user.update({ where: { id }, data });
+    return { ...user, role: Role[user.role] };
   }
 
   async delete(id: string): Promise<void> {
-    return await this.prisma.user.delete({ where: { id } });
+    await this.prisma.user.delete({ where: { id } });
   }
 
   async findById(id: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({ where: { id } });
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    return { ...user, role: Role[user.role] };
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({ where: { id } });
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    return { ...user, role: Role[user.role] };
   }
 
   async findAll({
@@ -41,10 +49,10 @@ export class UserRepository implements IUserRepository {
     const where: Prisma.UserWhereInput = {};
 
     if (filters.name)
-      where.name = { contains: filters.name, case: 'insensitive' };
+      where.name = { contains: filters.name, mode: 'insensitive' };
 
     if (filters.email)
-      where.email = { contains: filters.email, case: 'insensitive' };
+      where.email = { contains: filters.email, mode: 'insensitive' };
 
     if (typeof filters.isActive === 'boolean')
       where.isActive = filters.isActive;
@@ -61,6 +69,11 @@ export class UserRepository implements IUserRepository {
       }),
     ]);
 
-    return { total, data, page, totalPages: total / limit };
+    const mappedData = data.map((user) => ({
+      ...user,
+      role: Role[user.role],
+    }));
+
+    return { total, data: mappedData, page, totalPages: total / limit };
   }
 }
