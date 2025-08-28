@@ -1,0 +1,51 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { IProductRepository } from '@repository/IProduct.repository';
+import { IProductService } from '../domain/service/IProduct.service';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { Product } from '@entities/Product';
+import { CreateProductDTO } from '../domain/dto/product/create-product.dto';
+import { ProductFiltersDTO } from '../domain/dto/product/product-filters.dto';
+import { UpdateProductDTO } from '../domain/dto/product/update-product.dto';
+import { ICategoryRepository } from '@repository/ICategory.reposiory';
+
+@Injectable()
+export class ProductService implements IProductService {
+  constructor(
+    private readonly productRepository: IProductRepository,
+    private readonly categoryRepository: ICategoryRepository,
+  ) {}
+
+  async create(data: CreateProductDTO): Promise<Product> {
+    if (data.categoryId) {
+      const category = await this.categoryRepository.findById(data.categoryId);
+      if (!category) throw new NotFoundException('Category not found');
+    }
+
+    return await this.productRepository.create(data);
+  }
+
+  async update(id: string, data: UpdateProductDTO): Promise<Product> {
+    const product = this.productRepository.findById(id);
+    if (!product) throw new NotFoundException('Product not found');
+
+    return await this.productRepository.update(id, data);
+  }
+
+  async delete(id: string): Promise<void> {
+    const product = this.productRepository.findById(id);
+    if (!product) throw new NotFoundException('Product not found');
+
+    await this.productRepository.delete(id);
+  }
+
+  async findById(id: string): Promise<Product | null> {
+    const product = await this.productRepository.findById(id);
+    if (!product) throw new NotFoundException('Product not found');
+
+    return product;
+  }
+
+  findAll(filters: ProductFiltersDTO): Promise<IPaginatedResult<Product>> {
+    return this.productRepository.findAll(filters);
+  }
+}
