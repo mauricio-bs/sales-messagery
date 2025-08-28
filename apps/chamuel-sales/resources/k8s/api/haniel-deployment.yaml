@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chamuel-sales
+  namespace: angel-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chamuel-sales
+  template:
+    metadata:
+      labels:
+        app: chamuel-sales
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '9100'
+    spec:
+      containers:
+        - name: chamuel-sales
+          image: chamuel-sales:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: 'development'
+            - name: RABBITMQ_URL
+              value: 'amqp://guest:guest@rabbitmq:5672'
+            - name: POSTGRES_HOST
+              value: 'postgres-chamuel'
+            - name: POSTGRES_PORT
+              value: '5432'
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: chamuel-secrets
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chamuel-secrets
+                  key: DB_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: chamuel-secrets
+                  key: DB_NAME
+            - name: REDIS_HOST
+              value: 'redis-chamuel'
+            - name: METRICS_PORT
+              value: '9100'
+          resources:
+            requests:
+              cpu: '100m'
+              memory: '128Mi'
+            limits:
+              cpu: '400m'
+              memory: '512Mi'

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-gabriel
+  namespace: angel-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb-gabriel
+  template:
+    metadata:
+      labels:
+        app: mongodb-gabriel
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:6.0
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: angel-shop-secrets
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: angel-shop-secrets
+                  key: MONGO_INITDB_ROOT_PASSWORD
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodata
+              mountPath: /data/db
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+      volumes:
+        - name: mongodata
+          persistentVolumeClaim:
+            claimName: mongo-gabriel-pvc

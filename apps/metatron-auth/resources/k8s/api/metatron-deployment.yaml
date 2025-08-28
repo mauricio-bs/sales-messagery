@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metatron-auth
+  namespace: angel-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metatron-auth
+  template:
+    metadata:
+      labels:
+        app: metatron-auth
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '9100'
+    spec:
+      containers:
+        - name: metatron-auth
+          image: metatron-auth:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: 'development'
+            - name: RABBITMQ_URL
+              value: 'amqp://guest:guest@rabbitmq:5672'
+            - name: REDIS_HOST
+              value: 'redis-metatron'
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: metatron-secrets
+                  key: JWT_SECRET
+            - name: METRICS_PORT
+              value: '9100'
+          resources:
+            requests:
+              cpu: '100m'
+              memory: '128Mi'
+            limits:
+              cpu: '400m'
+              memory: '512Mi'

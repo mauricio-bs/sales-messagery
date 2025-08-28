@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-chamuel
+  namespace: angel-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-chamuel
+  template:
+    metadata:
+      labels:
+        app: postgres-chamuel
+    spec:
+      containers:
+        - name: postgres-chamuel
+          image: postgres:14-alpine
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: chamuel-secrets
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: chamuel-secrets
+                  key: DB_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: chamuel-secrets
+                  key: DB_NAME
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+          resources:
+            requests:
+              cpu: '50m'
+              memory: '64Mi'
+            limits:
+              cpu: '150m'
+              memory: '128Mi'
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pg-chamuel-pvc

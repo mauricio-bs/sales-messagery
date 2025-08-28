@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gabriel-notifications
+  namespace: angel-shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gabriel-notifications
+  template:
+    metadata:
+      labels:
+        app: gabriel-notifications
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/metrics'
+        prometheus.io/port: '9100'
+    spec:
+      containers:
+        - name: gabriel-notifications
+          image: gabriel-notifications:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: 'development'
+            - name: RABBITMQ_URL
+              value: 'amqp://guest:guest@rabbitmq:5672'
+            - name: MONGO_URI
+              value: 'mongodb://$(MONGO_USER):$(MONGO_PASS)@mongodb-gabriel:27017'
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: gabriel-secrets
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: gabriel-secrets
+                  key: MONGO_INITDB_ROOT_PASSWORD
+            - name: METRICS_PORT
+              value: '9100'
+          resources:
+            requests:
+              cpu: '100m'
+              memory: '128Mi'
+            limits:
+              cpu: '400m'
+              memory: '512Mi'

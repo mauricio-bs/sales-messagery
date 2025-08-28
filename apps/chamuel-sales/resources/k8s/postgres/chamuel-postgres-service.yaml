@@ -1,0 +1,12 @@
+chamuel: v1
+kind: Service
+metadata:
+  name: postgres-chamuel
+  namespace: angel-shop
+spec:
+  selector:
+    app: postgres-chamuel
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP

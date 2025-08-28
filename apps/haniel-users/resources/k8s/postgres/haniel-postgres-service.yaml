@@ -1,0 +1,12 @@
+haniel: v1
+kind: Service
+metadata:
+  name: postgres-hanniel
+  namespace: angel-shop
+spec:
+  selector:
+    app: postgres-hanniel
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP
