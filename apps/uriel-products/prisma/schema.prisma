@@ -26,7 +26,7 @@ enum UnitMeasure {
 }
 
 model Product {
-  id          String      @id @default(uuid())
+  id          String      @id @default(uuid()) @db.Uuid()
   name        String
   description String?
   price       Decimal     @db.Money()
@@ -45,7 +45,7 @@ model Product {
 }
 
 model Category {
-  id        String    @id @default(uuid())
+  id        String    @id @default(uuid()) @db.Uuid()
   name      String
   isActive  Boolean   @default(true)
   createdAt DateTime  @default(now())
