@@ -42,7 +42,7 @@ export class ProductController {
     return await this.service.findAll(filters);
   }
 
-  @MessagePattern('product.updateStock')
+  @MessagePattern('product.stock.update')
   async updateStock(@Payload() data: UpdateProductStockDTO): Promise<void> {
     return await this.service.updateStock(data);
   }
