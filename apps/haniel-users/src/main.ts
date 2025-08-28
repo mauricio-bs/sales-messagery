@@ -8,9 +8,11 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://rabbitmq:5672'],
-        queue: 'users_queue',
-        queueOptions: { durable: false },
+        urls: [process.env.RABBITMQ_URL],
+        queue: 'queue.users',
+        queueOptions: { durable: true },
+        exchange: 'exchange.haniel-users',
+        exchangeType: 'topic',
       },
     },
   );

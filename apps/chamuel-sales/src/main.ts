@@ -8,9 +8,11 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://rabbitmq:5672'],
-        queue: 'sales_queue',
-        queueOptions: { durable: false },
+        urls: [process.env.RABBITMQ_URL],
+        queue: 'queue.sales',
+        queueOptions: { durable: true },
+        exchange: 'exchange.chamuel-sales',
+        exchangeType: 'topic',
       },
     },
   );

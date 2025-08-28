@@ -4,6 +4,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['production', 'development', 'local']),
   PORT: z.coerce.number().default(3000),
   LOG_LEVEL: z.enum(['verbose', 'info', 'warning', 'error']).default('verbose'),
+  RABBITMQ_URL: z.url(),
   // DATABASE
   DATABASE_URL: z.string(),
   // RATE LIMIT
