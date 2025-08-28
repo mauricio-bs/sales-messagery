@@ -3,10 +3,11 @@ import { IProductRepository } from '@repository/IProduct.repository';
 import { IProductService } from '../domain/service/IProduct.service';
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { Product } from '@entities/Product';
-import { CreateProductDTO } from '../domain/dto/product/create-product.dto';
-import { ProductFiltersDTO } from '../domain/dto/product/product-filters.dto';
-import { UpdateProductDTO } from '../domain/dto/product/update-product.dto';
+import { CreateProductDTO } from '../domain/dto/create-product.dto';
+import { ProductFiltersDTO } from '../domain/dto/product-filters.dto';
+import { UpdateProductDTO } from '../domain/dto/update-product.dto';
 import { ICategoryRepository } from '@repository/ICategory.reposiory';
+import { UpdateProductStockDTO } from '../domain/dto/update-product-stock.dto';
 
 @Injectable()
 export class ProductService implements IProductService {
@@ -45,7 +46,13 @@ export class ProductService implements IProductService {
     return product;
   }
 
-  findAll(filters: ProductFiltersDTO): Promise<IPaginatedResult<Product>> {
-    return this.productRepository.findAll(filters);
+  async findAll(
+    filters: ProductFiltersDTO,
+  ): Promise<IPaginatedResult<Product>> {
+    return await this.productRepository.findAll(filters);
+  }
+
+  async updateStock(data: UpdateProductStockDTO): Promise<void> {
+    await this.productRepository.updateStock(data);
   }
 }

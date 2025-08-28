@@ -1,11 +1,13 @@
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { Product } from '@entities/Product';
-import { CreateProductDTO } from '@modules/products/domain/dto/product/create-product.dto';
-import { ProductFiltersDTO } from '@modules/products/domain/dto/product/product-filters.dto';
-import { UpdateProductDTO } from '@modules/products/domain/dto/product/update-product.dto';
-import { IProductService } from '@modules/products/domain/service/IProduct.service';
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { Product } from '@entities/Product';
+import { CreateProductDTO } from '@modules/products/domain/dto/create-product.dto';
+import { ProductFiltersDTO } from '@modules/products/domain/dto/product-filters.dto';
+import { UpdateProductDTO } from '@modules/products/domain/dto/update-product.dto';
+import { UpdateProductStockDTO } from '@modules/products/domain/dto/update-product-stock.dto';
+import { IProductService } from '@modules/products/domain/service/IProduct.service';
 
 @Controller()
 export class ProductController {
@@ -38,5 +40,10 @@ export class ProductController {
     @Payload() filters: ProductFiltersDTO,
   ): Promise<IPaginatedResult<Product>> {
     return await this.service.findAll(filters);
+  }
+
+  @MessagePattern('product.updateStock')
+  async updateStock(@Payload() data: UpdateProductStockDTO): Promise<void> {
+    return await this.service.updateStock(data);
   }
 }

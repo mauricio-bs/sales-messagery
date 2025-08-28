@@ -1,9 +1,10 @@
 import { PrismaService } from '@common/database/prisma/prisma.service';
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { Product } from '@entities/Product';
-import { CreateProductDTO } from '@modules/products/domain/dto/product/create-product.dto';
-import { ProductFiltersDTO } from '@modules/products/domain/dto/product/product-filters.dto';
-import { UpdateProductDTO } from '@modules/products/domain/dto/product/update-product.dto';
+import { CreateProductDTO } from '@modules/products/domain/dto/create-product.dto';
+import { ProductFiltersDTO } from '@modules/products/domain/dto/product-filters.dto';
+import { UpdateProductDTO } from '@modules/products/domain/dto/update-product.dto';
+import { UpdateProductStockDTO } from '@modules/products/domain/dto/update-product-stock.dto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { IProductRepository } from '@root/repository/IProduct.repository';
@@ -18,6 +19,18 @@ export class ProductRepository implements IProductRepository {
 
   async update(id: string, data: UpdateProductDTO): Promise<Product> {
     return await this.prisma.product.update({ where: { id }, data });
+  }
+
+  async updateStock(data: UpdateProductStockDTO): Promise<void> {
+    await this.prisma.product.update({
+      where: { id: data.id },
+      data: {
+        quantity: {
+          ...(data.operation === 'decrease' && { decrement: data.quantity }),
+          ...(data.operation === 'increase' && { increment: data.quantity }),
+        },
+      },
+    });
   }
 
   async delete(id: string): Promise<void> {
