@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SaleStatus {
+  pending
+  completed
+  canceled
+}
+
+model Sale {
+  id        String      @id @default(uuid()) @db.Uuid()
+  status    SaleStatus  @default(pending)
+  total     Decimal     @db.Money()
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  // Relations
+  items     SaleItems[]
+
+  @@map("sale")
+}
+
+model SaleItems {
+  id          String   @id @default(uuid()) @db.Uuid()
+  name        String
+  quantity    Float
+  unit_value  Decimal  @db.Money()
+  total_value Decimal  @db.Money()
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  // Relations
+  productId   String   @db.Uuid()
+  sale        Sale     @relation(fields: [saleId], references: [id])
+  saleId      String
+
+  @@map("sale_item")
+}
