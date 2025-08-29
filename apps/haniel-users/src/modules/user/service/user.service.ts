@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -51,12 +52,12 @@ export class UserService implements IUserService {
     return await this.repository.findAll(filters);
   }
 
-  async signin(data: SigninUserDTO): Promise<boolean> {
+  async signin(data: SigninUserDTO): Promise<Omit<User, 'password'>> {
     const user = await this.repository.findByEmail(data.email);
 
     if (!user || !user.isActive || !compareHash(data.password, user.password))
-      return false;
+      throw new BadRequestException('Email or password does not match');
 
-    return true;
+    return new User(user);
   }
 }

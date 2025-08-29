@@ -12,5 +12,5 @@ export abstract class IUserService {
   abstract delete(id: string): Promise<void>;
   abstract findById(id: string): Promise<User | null>;
   abstract findAll(filters: FilterUsersDTO): Promise<IPaginatedResult<User>>;
-  abstract signin(data: SigninUserDTO): Promise<boolean>;
+  abstract signin(data: SigninUserDTO): Promise<Omit<User, 'password'>>;
 }

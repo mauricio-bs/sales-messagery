@@ -43,7 +43,9 @@ export class UserController {
   }
 
   @MessagePattern('user:signin')
-  async signin(@Payload() data: SigninUserDTO): Promise<boolean> {
+  async signin(
+    @Payload() data: SigninUserDTO,
+  ): Promise<Omit<User, 'password'>> {
     return await this.service.signin(data);
   }
 }

@@ -1,9 +1,13 @@
+import { Exclude } from 'class-transformer';
+
 import { Role } from '../enum/role.enum';
 import { BaseEntity } from './BaseEntity';
 
 export class User extends BaseEntity {
   public name: string;
   public email: string;
+
+  @Exclude()
   public password: string;
   public isActive: boolean = true;
   public role: Role;
