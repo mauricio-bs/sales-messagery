@@ -1,8 +1,8 @@
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { User } from '@entities/User';
 import { CreateUserDTO } from '@modules/user/domain/dto/create-user.dto';
 import { FilterUsersDTO } from '@modules/user/domain/dto/filter-users.dto';
 import { UpdateUserDTo } from '@modules/user/domain/dto/update-user.dto';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { User } from '@entities/User';
 
 export abstract class IUserRepository {
   abstract create(data: CreateUserDTO): Promise<User>;

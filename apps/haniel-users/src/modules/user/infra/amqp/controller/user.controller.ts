@@ -1,13 +1,13 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { User } from '@entities/User';
 import { CreateUserDTO } from '@modules/user/domain/dto/create-user.dto';
 import { FilterUsersDTO } from '@modules/user/domain/dto/filter-users.dto';
 import { SigninUserDTO } from '@modules/user/domain/dto/signin-user.dto';
 import { UpdateUserDTo } from '@modules/user/domain/dto/update-user.dto';
 import { IUserService } from '@modules/user/domain/service/IUser.service';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { User } from '@entities/User';
 
 @Controller()
 export class UserController {

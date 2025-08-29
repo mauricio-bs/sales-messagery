@@ -4,15 +4,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { User } from '@entities/User';
 import { IUserRepository } from '@repository/IUser.repository';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { compareHash } from '@common/utils/hash-utils';
+import { User } from '@entities/User';
+
 import { CreateUserDTO } from '../domain/dto/create-user.dto';
 import { FilterUsersDTO } from '../domain/dto/filter-users.dto';
+import { SigninUserDTO } from '../domain/dto/signin-user.dto';
 import { UpdateUserDTo } from '../domain/dto/update-user.dto';
 import { IUserService } from '../domain/service/IUser.service';
-import { compareHash } from '@common/utils/hash-utils';
-import { SigninUserDTO } from '../domain/dto/signin-user.dto';
 
 @Injectable()
 export class UserService implements IUserService {

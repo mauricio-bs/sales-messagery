@@ -1,6 +1,7 @@
+import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
+
 import { Role } from '@common/enum/role.enum';
 import { PaginationOptions } from '@common/interfaces/PaginationOptions';
-import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class FilterUsersDTO extends PaginationOptions {
   @IsOptional()

@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+
 import { BaseEntity } from './BaseEntity';
 
 export class UserPreferences extends BaseEntity {

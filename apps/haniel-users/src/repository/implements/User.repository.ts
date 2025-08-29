@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 
+import { IUserRepository } from '@repository/IUser.repository';
+import { CreateUserDTO } from '@modules/user/domain/dto/create-user.dto';
+import { FilterUsersDTO } from '@modules/user/domain/dto/filter-users.dto';
+import { UpdateUserDTo } from '@modules/user/domain/dto/update-user.dto';
 import { PrismaService } from '@common/database/prisma/prisma.service';
 import { Role } from '@common/enum/role.enum';
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { User } from '@entities/User';
-import { CreateUserDTO } from '@modules/user/domain/dto/create-user.dto';
-import { FilterUsersDTO } from '@modules/user/domain/dto/filter-users.dto';
-import { UpdateUserDTo } from '@modules/user/domain/dto/update-user.dto';
-import { IUserRepository } from '@repository/IUser.repository';
 
 @Injectable()
 export class UserRepository implements IUserRepository {

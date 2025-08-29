@@ -1,11 +1,6 @@
-import { Role } from '@common/enum/role.enum';
+import { IsEmail, IsString, IsStrongPassword } from 'class-validator';
+
 import { User } from '@entities/User';
-import {
-  IsBoolean,
-  IsEmail,
-  IsString,
-  IsStrongPassword,
-} from 'class-validator';
 
 export class CreateUserDTO
   implements Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'role' | 'isActive'>

@@ -1,11 +1,12 @@
-import { PrismaService } from '@common/database/prisma/prisma.service';
 import { Module } from '@nestjs/common';
 
-import { IUserRepository } from '@repository/IUser.repository';
 import { UserRepository } from '@repository/implements/User.repository';
+import { IUserRepository } from '@repository/IUser.repository';
+import { PrismaService } from '@common/database/prisma/prisma.service';
+
 import { IUserService } from './domain/service/IUser.service';
-import { UserService } from './service/user.service';
 import { UserController } from './infra/amqp/controller/user.controller';
+import { UserService } from './service/user.service';
 
 @Module({
   controllers: [UserController],

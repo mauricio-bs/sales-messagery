@@ -1,9 +1,10 @@
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { User } from '@entities/User';
+
 import { CreateUserDTO } from '../dto/create-user.dto';
-import { UpdateUserDTo } from '../dto/update-user.dto';
 import { FilterUsersDTO } from '../dto/filter-users.dto';
 import { SigninUserDTO } from '../dto/signin-user.dto';
+import { UpdateUserDTo } from '../dto/update-user.dto';
 
 export abstract class IUserService {
   abstract create(data: CreateUserDTO): Promise<User>;
