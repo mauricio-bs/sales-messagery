@@ -1,5 +1,6 @@
-import { Category } from '@entities/Category';
 import { IsOptional, IsString } from 'class-validator';
+
+import { Category } from '@entities/Category';
 
 export class CreateCategoryDTO
   implements Omit<Category, 'isActive' | 'createdAt' | 'updatedAt'>

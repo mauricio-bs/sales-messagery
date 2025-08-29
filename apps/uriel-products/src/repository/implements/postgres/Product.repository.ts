@@ -1,13 +1,14 @@
-import { PrismaService } from '@common/database/prisma/prisma.service';
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { Product } from '@entities/Product';
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+
 import { CreateProductDTO } from '@modules/products/domain/dto/create-product.dto';
 import { ProductFiltersDTO } from '@modules/products/domain/dto/product-filters.dto';
 import { UpdateProductDTO } from '@modules/products/domain/dto/update-product.dto';
 import { UpdateProductStockDTO } from '@modules/products/domain/dto/update-product-stock.dto';
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { PrismaService } from '@common/database/prisma/prisma.service';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { IProductRepository } from '@root/repository/IProduct.repository';
+import { Product } from '@entities/Product';
 
 @Injectable()
 export class ProductRepository implements IProductRepository {

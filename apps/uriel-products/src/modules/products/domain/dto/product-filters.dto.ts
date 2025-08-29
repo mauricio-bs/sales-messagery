@@ -1,4 +1,3 @@
-import { PaginationOptions } from '@common/interfaces/PaginationOptions';
 import {
   IsBoolean,
   IsNumber,
@@ -6,6 +5,8 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+
+import { PaginationOptions } from '@common/interfaces/PaginationOptions';
 
 export class ProductFiltersDTO extends PaginationOptions {
   @IsOptional()

@@ -1,12 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { Category } from '@entities/Category';
+import { CategoryFiltersDTO } from '@modules/category/domain/dto/category-filters.dto';
 import { CreateCategoryDTO } from '@modules/category/domain/dto/create-category.dto';
 import { UpdateCategoryDTO } from '@modules/category/domain/dto/update-category.dto';
 import { ICategoryService } from '@modules/category/domain/service/ICategory.service';
-import { CategoryFiltersDTO } from '@modules/category/domain/dto/category-filters.dto';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { Category } from '@entities/Category';
 
 @Controller()
 export class CategoryController {

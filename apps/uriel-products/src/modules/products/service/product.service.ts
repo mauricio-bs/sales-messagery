@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+
+import { ICategoryRepository } from '@repository/ICategory.reposiory';
 import { IProductRepository } from '@repository/IProduct.repository';
-import { IProductService } from '../domain/service/IProduct.service';
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { Product } from '@entities/Product';
+
 import { CreateProductDTO } from '../domain/dto/create-product.dto';
 import { ProductFiltersDTO } from '../domain/dto/product-filters.dto';
 import { UpdateProductDTO } from '../domain/dto/update-product.dto';
-import { ICategoryRepository } from '@repository/ICategory.reposiory';
 import { UpdateProductStockDTO } from '../domain/dto/update-product-stock.dto';
+import { IProductService } from '../domain/service/IProduct.service';
 
 @Injectable()
 export class ProductService implements IProductService {

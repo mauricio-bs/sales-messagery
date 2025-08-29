@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from 'generated/prisma';
 
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { PrismaService } from '@common/database/prisma/prisma.service';
-import { Category } from '@entities/Category';
+import { ICategoryRepository } from '@repository/ICategory.reposiory';
 import { CategoryFiltersDTO } from '@modules/category/domain/dto/category-filters.dto';
 import { CreateCategoryDTO } from '@modules/category/domain/dto/create-category.dto';
 import { UpdateCategoryDTO } from '@modules/category/domain/dto/update-category.dto';
-import { ICategoryRepository } from '@repository/ICategory.reposiory';
+import { PrismaService } from '@common/database/prisma/prisma.service';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { Category } from '@entities/Category';
 
 @Injectable()
 export class CategoryRepository implements ICategoryRepository {

@@ -1,8 +1,8 @@
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { Category } from '@entities/Category';
 import { CategoryFiltersDTO } from '@modules/category/domain/dto/category-filters.dto';
 import { CreateCategoryDTO } from '@modules/category/domain/dto/create-category.dto';
 import { UpdateCategoryDTO } from '@modules/category/domain/dto/update-category.dto';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { Category } from '@entities/Category';
 
 export abstract class ICategoryRepository {
   abstract create(data: CreateCategoryDTO): Promise<Category>;

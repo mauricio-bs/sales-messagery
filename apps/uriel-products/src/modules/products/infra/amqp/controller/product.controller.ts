@@ -1,13 +1,13 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { Product } from '@entities/Product';
 import { CreateProductDTO } from '@modules/products/domain/dto/create-product.dto';
 import { ProductFiltersDTO } from '@modules/products/domain/dto/product-filters.dto';
 import { UpdateProductDTO } from '@modules/products/domain/dto/update-product.dto';
 import { UpdateProductStockDTO } from '@modules/products/domain/dto/update-product-stock.dto';
 import { IProductService } from '@modules/products/domain/service/IProduct.service';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { Product } from '@entities/Product';
 
 @Controller()
 export class ProductController {

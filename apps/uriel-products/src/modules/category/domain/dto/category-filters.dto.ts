@@ -1,5 +1,6 @@
-import { PaginationOptions } from '@common/interfaces/PaginationOptions';
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
+
+import { PaginationOptions } from '@common/interfaces/PaginationOptions';
 
 export class CategoryFiltersDTO extends PaginationOptions {
   @IsOptional()

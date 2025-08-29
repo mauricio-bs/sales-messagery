@@ -1,11 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+
 import { ICategoryRepository } from '@repository/ICategory.reposiory';
-import { ICategoryService } from '../domain/service/ICategory.service';
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { Category } from '@entities/Category';
+
 import { CategoryFiltersDTO } from '../domain/dto/category-filters.dto';
 import { CreateCategoryDTO } from '../domain/dto/create-category.dto';
 import { UpdateCategoryDTO } from '../domain/dto/update-category.dto';
+import { ICategoryService } from '../domain/service/ICategory.service';
 
 @Injectable()
 export class CategoryService implements ICategoryService {

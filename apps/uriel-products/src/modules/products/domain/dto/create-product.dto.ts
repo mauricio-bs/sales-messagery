@@ -1,6 +1,3 @@
-import { EUnitType } from '@common/enum/unitType.enum';
-import { Category } from '@entities/Category';
-import { Product } from '@entities/Product';
 import {
   IsEnum,
   IsNumber,
@@ -9,6 +6,9 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+
+import { EUnitType } from '@common/enum/unitType.enum';
+import { Product } from '@entities/Product';
 
 export class CreateProductDTO
   implements
