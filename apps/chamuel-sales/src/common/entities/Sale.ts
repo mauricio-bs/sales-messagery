@@ -1,6 +1,8 @@
-import { ESaleStatus } from '@common/enum/SaleStatus.enum';
-import { BaseEntity } from './BaseEntity';
 import { randomUUID } from 'node:crypto';
+
+import { ESaleStatus } from '@common/enum/SaleStatus.enum';
+
+import { BaseEntity } from './BaseEntity';
 import { SaleItems } from './SaleItems';
 
 export class Sale extends BaseEntity {

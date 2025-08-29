@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
-import { DatabaseModule } from '@common/database/database.module';
-import { ConfigurationsModule } from '@config/configurations.module';
-import { RmqCacheInterceptor } from '@interceptor/http-cache.interceptor';
 import { IndexModule } from '@modules/index.module';
+import { DatabaseModule } from '@common/database/database.module';
+import { RmqCacheInterceptor } from '@interceptor/http-cache.interceptor';
+import { ConfigurationsModule } from '@config/configurations.module';
 
 @Module({
   imports: [IndexModule, DatabaseModule, ConfigurationsModule],

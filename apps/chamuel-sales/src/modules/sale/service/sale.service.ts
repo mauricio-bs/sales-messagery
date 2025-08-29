@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
+import { ISaleRepository } from '@repository/ISaleRepository';
 import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
 import { Sale } from '@entities/Sale';
-import { ISaleRepository } from '@repository/ISaleRepository';
+
 import { CreateSaleDTO } from '../domain/dto/create-sale.dto';
 import { FilterSalesDTO } from '../domain/dto/filter-sales.dto';
 import { UpdateSaleDTO } from '../domain/dto/update-sale.dto';

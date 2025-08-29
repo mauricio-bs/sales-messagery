@@ -1,7 +1,8 @@
-import { ConfigService } from '@nestjs/config';
-import { Env } from '../env/validate-env';
 import { CacheModuleOptions } from '@nestjs/cache-manager';
+import { ConfigService } from '@nestjs/config';
 import { ioRedisStore } from '@tirke/node-cache-manager-ioredis';
+
+import { Env } from '../env/validate-env';
 
 export function cacheConfigFactory(
   configService: ConfigService<Env>,

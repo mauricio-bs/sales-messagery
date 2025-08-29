@@ -1,12 +1,13 @@
-import { PrismaService } from '@common/database/prisma/prisma.service';
-import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
-import { Sale } from '@entities/Sale';
+import { Injectable } from '@nestjs/common';
+import { Prisma } from 'generated/prisma';
+
+import { ISaleRepository } from '@repository/ISaleRepository';
 import { CreateSaleDTO } from '@modules/sale/domain/dto/create-sale.dto';
 import { FilterSalesDTO } from '@modules/sale/domain/dto/filter-sales.dto';
 import { UpdateSaleDTO } from '@modules/sale/domain/dto/update-sale.dto';
-import { Injectable } from '@nestjs/common';
-import { ISaleRepository } from '@repository/ISaleRepository';
-import { Prisma } from 'generated/prisma';
+import { PrismaService } from '@common/database/prisma/prisma.service';
+import { IPaginatedResult } from '@common/interfaces/IPaginatedResult';
+import { Sale } from '@entities/Sale';
 
 @Injectable()
 export class SaleRepository implements ISaleRepository {
