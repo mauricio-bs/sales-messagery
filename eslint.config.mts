@@ -1,19 +1,21 @@
 import js from '@eslint/js';
+import { defineConfig } from 'eslint/config';
+import pluginImport from 'eslint-plugin-import';
+import prettier from 'eslint-plugin-prettier';
+import importSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import { defineConfig } from 'eslint/config';
-import importHelpers from 'eslint-plugin-import-helpers';
-import prettier from 'eslint-plugin-prettier';
 
 export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
-    plugins: { js, importHelpers, prettier },
-    extends: [
-      'js/recommended',
-      'plugin:prettier/recommended',
-      '@typescript-eslint/eslint-plugin',
-    ],
+    plugins: {
+      js,
+      'simple-import-sort': importSort,
+      prettier,
+      import: pluginImport,
+    },
+    extends: ['js/recommended'],
     languageOptions: { globals: globals.node },
     rules: {
       'prettier/prettier': 'error',
@@ -38,14 +40,41 @@ export default defineConfig([
       '@typescript-eslint/no-throw-literal': 'off',
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/no-require-imports': 'off',
-      'import-helpers/order-imports': [
+      'import/first': 'error',
+      'import/newline-after-import': 'warn',
+      'import/no-duplicates': 'error',
+      'simple-import-sort/imports': [
         'warn',
         {
-          newlinesBetween: 'always', // new line between groups
-          groups: ['/^node:*/', 'module', ['parent', 'sibling', 'index']],
-          alphabetize: { order: 'asc', ignoreCase: true },
+          groups: [
+            // Side effect imports.
+            ['^\\u0000'],
+            // Node.js builtins prefixed with `node:`.
+            ['^node:'],
+            // Packages.
+            // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+            ['^@?\\w'],
+            // Custom paths
+            [
+              '^@repository/',
+              '^@modules/',
+              '^@common/',
+              '^@interceptor/',
+              '^@root/',
+              '^@decorator/',
+              '^@config/',
+              '^@entities/',
+            ],
+            // Absolute imports and other imports such as Vue-style `@/foo`.
+            // Anything not matched in another group.
+            ['^'],
+            // Relative imports.
+            // Anything that starts with a dot.
+            ['^\\.'],
+          ],
         },
       ],
+      'simple-import-sort/exports': 'warn',
     },
   },
   tseslint.configs.recommended,
